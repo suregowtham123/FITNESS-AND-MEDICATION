@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ other_user.username }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 4rem);
+        }
+        .message-list {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .message {
+            max-width: 75%;
+            padding: 0.75rem 1rem;
+            border-radius: 1.5rem;
+            word-wrap: break-word;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .message.sent {
+            background-color: #2563eb;
+            align-self: flex-end;
+            color: white;
+            border-bottom-right-radius: 0.25rem;
+        }
+        .message.received {
+            background-color: #e5e7eb;
+            align-self: flex-start;
+            color: #1f2937;
+            border-bottom-left-radius: 0.25rem;
+        }
+        .message-form {
+            padding: 1rem;
+            background-color: #ffffff;
+            border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <div class="chat-container">
+        <header class="bg-sky-600 p-4 flex justify-between items-center text-white">
+            <h1 class="text-2xl font-bold">Chat with {{ other_user.username }}</h1>
+            <a href="{{ url_for('dashboard') }}" class="text-sm font-medium hover:text-sky-200 transition-colors">Exit Chat</a>
+        </header>
+
+        <div class="message-list">
+            {% for message in messages %}
+                <div class="message {% if message.sender_id == current_user.id %}sent{% else %}received{% endif %}">
+                    <p>{{ message.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <form method="POST" class="message-form flex items-center gap-4">
+            <input type="text" name="message_content" placeholder="Type your message..." required
+                   class="flex-grow rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
+            <button type="submit"
+                    class="bg-sky-600 text-white p-3 rounded-full hover:bg-sky-700 transition-all shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+            </button>
+        </form>
+    </div>
+</body>
+</html>

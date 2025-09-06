@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md transform transition-all duration-300 hover:scale-105">
+        <h2 class="text-3xl font-bold text-center text-white mb-6">Create an Account</h2>
+        
+        <form method="POST" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+                <div class="mt-1">
+                    <input type="text" name="username" id="username" required class="block w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150">
+                </div>
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                <div class="mt-1">
+                    <input type="password" name="password" id="password" required class="block w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150">
+                </div>
+            </div>
+            
+            <div>
+                <label for="age" class="block text-sm font-medium text-gray-300">Age</label>
+                <div class="mt-1">
+                    <input type="number" name="age" id="age" required class="block w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150">
+                </div>
+            </div>
+            
+            <!-- Added Role Selection -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300">I am a...</label>
+                <div class="mt-2 flex items-center space-x-6">
+                    <div class="flex items-center">
+                        <input id="patient" name="role" type="radio" value="patient" checked class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 bg-gray-700 rounded-full">
+                        <label for="patient" class="ml-2 block text-sm font-medium text-gray-300">
+                            Patient
+                        </label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="doctor" name="role" type="radio" value="doctor" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 bg-gray-700 rounded-full">
+                        <label for="doctor" class="ml-2 block text-sm font-medium text-gray-300">
+                            Doctor
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
+                    Register
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-6 text-center">
+            <a href="{{ url_for('login') }}" class="text-sm text-blue-400 hover:text-blue-300 font-medium transition duration-150">Already have an account? Login</a>
+        </div>
+    </div>
+</body>
+</html>

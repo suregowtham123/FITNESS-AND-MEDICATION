@@ -1,0 +1,5 @@
+flask
+flask-login
+flask_sqlalchemy
+requests
+beautifulsoup4

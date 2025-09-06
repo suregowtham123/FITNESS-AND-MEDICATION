@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-sky-600 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('dashboard') }}" class="text-white text-2xl font-bold">MyHealth</a>
+            <ul class="flex space-x-4 text-white font-medium">
+                <li><a href="{{ url_for('dashboard') }}" class="hover:text-sky-200 transition-colors">Dashboard</a></li>
+                <li><a href="{{ url_for('llm_fitness') }}" class="hover:text-sky-200 transition-colors">Fitness</a></li>
+                <li><a href="{{ url_for('llm_medication') }}" class="hover:text-sky-200 transition-colors">Medication</a></li>
+                <li><a href="{{ url_for('doctor_comm') }}" class="hover:text-sky-200 transition-colors">Doctor Comm</a></li>
+                <li><a href="{{ url_for('logout') }}" class="hover:text-sky-200 transition-colors">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <h1 class="text-4xl font-bold text-gray-800 text-center mb-8">Medication Information</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-md" role="alert">
+                <p>{{ message }}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="mb-8 flex justify-center space-x-4">
+            <input type="text" name="query" placeholder="Enter a symptom (e.g., headache, fever)" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-sky-500 focus:border-sky-500">
+            <button type="submit" class="px-6 py-2 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                Search
+            </button>
+        </form>
+
+        <!-- Display section for Normal and Low Power Medicines -->
+        {% if low_power_meds %}
+        <div class="mb-10">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b border-gray-300 pb-2">Normal and Low Power Medicines</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for med in low_power_meds %}
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                    <img src="{{ med.image }}" alt="{{ med.name }}" class="w-32 h-32 object-contain rounded-md mb-4">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-2">{{ med.name }}</h4>
+                    <p class="text-sm text-gray-600 flex-grow">{{ med.info }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Display section for Antibiotics or High Power Medicines -->
+        {% if high_power_meds %}
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b border-gray-300 pb-2">Antibiotics or High Power Medicines</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for med in high_power_meds %}
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                    <img src="{{ med.image }}" alt="{{ med.name }}" class="w-32 h-32 object-contain rounded-md mb-4">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-2">{{ med.name }}</h4>
+                    <p class="text-sm text-gray-600 flex-grow">{{ med.info }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if not low_power_meds and not high_power_meds and request.method == 'POST' %}
+            <div class="text-center text-gray-500">No medication information found. Please try a different query.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f9;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <nav class="bg-blue-600 text-white w-full shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="{{ url_for('dashboard') }}" class="text-2xl font-bold">Health App</a>
+            <ul class="flex space-x-6">
+                <li><a href="{{ url_for('llm_fitness') }}" class="hover:text-sky-200 transition">Fitness</a></li>
+                <li><a href="{{ url_for('llm_medication') }}" class="hover:text-sky-200 transition">Medication</a></li>
+                <li><a href="{{ url_for('doctor_comm') }}" class="hover:text-sky-200 transition">Contact Doctor</a></li>
+                <li><a href="{{ url_for('logout') }}" class="hover:text-sky-200 transition">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-8 flex-1">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-4">Welcome, {{ user.username }}!</h1>
+        <p class="text-xl text-center text-gray-600 mb-8">Role: {{ user.role.capitalize() }}</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="bg-white rounded-xl shadow-lg p-6 transform transition hover:scale-105">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Fitness Guide</h2>
+                <p class="text-gray-600 mb-6">Get a personalized fitness plan based on your goals.</p>
+                <a href="{{ url_for('llm_fitness') }}" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-700 transition">Explore</a>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-lg p-6 transform transition hover:scale-105">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Medication Info</h2>
+                <p class="text-gray-600 mb-6">Find information about medications for various symptoms.</p>
+                <a href="{{ url_for('llm_medication') }}" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-700 transition">Explore</a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 transform transition hover:scale-105">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact a Doctor</h2>
+                <p class="text-gray-600 mb-6">Communicate directly with healthcare professionals.</p>
+                <a href="{{ url_for('doctor_comm') }}" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-full hover:bg-blue-700 transition">Connect</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mt-8 text-center">
+                    {% for category, message in messages %}
+                        <div class="bg-red-100 text-red-700 p-3 rounded-lg font-medium">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </main>
+
+    <footer class="w-full bg-gray-800 text-white text-center py-4 mt-8">
+        <p>&copy; 2024 Health App. All rights reserved.</p>
+    </footer>
+</body>
+</html>

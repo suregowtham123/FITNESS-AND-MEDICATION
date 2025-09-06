@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Guidance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-sky-600 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('dashboard') }}" class="text-white text-2xl font-bold">MyHealth</a>
+            <ul class="flex space-x-4 text-white font-medium">
+                <li><a href="{{ url_for('dashboard') }}" class="hover:text-sky-200 transition-colors">Dashboard</a></li>
+                <li><a href="{{ url_for('llm_fitness') }}" class="hover:text-sky-200 transition-colors">Fitness</a></li>
+                <li><a href="{{ url_for('llm_medication') }}" class="hover:text-sky-200 transition-colors">Medication</a></li>
+                <li><a href="{{ url_for('doctor_comm') }}" class="hover:text-sky-200 transition-colors">Doctor Comm</a></li>
+                <li><a href="{{ url_for('logout') }}" class="hover:text-sky-200 transition-colors">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <h1 class="text-4xl font-bold text-gray-800 text-center mb-8">Fitness Guidance</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-md" role="alert">
+                <p>{{ message }}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="mb-8 flex justify-center space-x-4">
+            <input type="text" name="query" placeholder="Enter a fitness goal (e.g., weight loss, muscle gain)" class="flex-grow px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-sky-500 focus:border-sky-500">
+            <button type="submit" class="px-6 py-2 bg-sky-600 text-white font-semibold rounded-lg shadow-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                Get Plan
+            </button>
+        </form>
+
+        {% if fitness_info %}
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-6 border-b border-gray-300 pb-2">Your Fitness Plan</h2>
+
+            <div class="mb-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-2">1. Exercises (Max 5)</h3>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 pl-4">
+                    {% if fitness_info and fitness_info.exercises %}
+                        {% for exercise in fitness_info.exercises %}
+                        <li>{{ exercise }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No exercises found.</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-2">2. Daily Time & Allocation</h3>
+                <p class="text-gray-600">Total time per day: <strong>{{ fitness_info.daily_time }}</strong></p>
+                <ul class="list-disc list-inside space-y-1 text-gray-600 pl-4 mt-2">
+                    {% if fitness_info and fitness_info.time_allocation %}
+                        {% for exercise, time in fitness_info.time_allocation.items() %}
+                        <li><strong>{{ exercise }}:</strong> {{ time }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No time allocation details found.</li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-2">3. Calories Burned</h3>
+                <p class="text-gray-600">
+                    {% if fitness_info and fitness_info.calories_burned %}
+                        {{ fitness_info.calories_burned }}
+                    {% else %}
+                        No calories burned information found.
+                    {% endif %}
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">4. Diet to Follow</h3>
+                <p class="text-gray-600">
+                    {% if fitness_info and fitness_info.diet %}
+                        {{ fitness_info.diet }}
+                    {% else %}
+                        No diet information found.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

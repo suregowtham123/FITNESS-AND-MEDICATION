@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Inbox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light background */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-sky-600 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{{ url_for('dashboard') }}" class="text-white text-2xl font-bold">MyHealth</a>
+            <ul class="flex space-x-4 text-white font-medium">
+                <li><a href="{{ url_for('dashboard') }}" class="hover:text-sky-200 transition-colors">Dashboard</a></li>
+                <li><a href="{{ url_for('llm_fitness') }}" class="hover:text-sky-200 transition-colors">Fitness</a></li>
+                <li><a href="{{ url_for('llm_medication') }}" class="hover:text-sky-200 transition-colors">Medication</a></li>
+                <li><a href="{{ url_for('doctor_comm') }}" class="hover:text-sky-200 transition-colors">Doctor Comm</a></li>
+                <li><a href="{{ url_for('logout') }}" class="hover:text-sky-200 transition-colors">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="flex-grow container mx-auto p-6 mt-8">
+        <h1 class="text-4xl font-extrabold text-gray-900 text-center mb-8">Doctor Inbox</h1>
+        <p class="text-center text-gray-600 mb-8">
+            Here are the patients who have messaged you. Click on a name to start a chat.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% if patients %}
+                {% for patient in patients %}
+                <a href="{{ url_for('chat', other_user_id=patient.id) }}" class="block bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center transform transition-all duration-300 hover:scale-105 hover:bg-gray-50">
+                    <div class="w-24 h-24 rounded-full bg-sky-100 flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-900 mb-2">{{ patient.username }}</h2>
+                    <span class="text-sm font-medium text-gray-500">Patient</span>
+                </a>
+                {% endfor %}
+            {% else %}
+                <div class="col-span-full bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <p class="text-gray-500">You have no new messages from patients.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

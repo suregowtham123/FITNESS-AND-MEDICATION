@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: linear-gradient(to bottom right, #e0f2fe, #f1f5f9);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="bg-white p-10 rounded-2xl shadow-xl w-full max-w-sm transform transition-all duration-300 hover:scale-105">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Welcome Back</h2>
+        
+        <form method="POST" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-semibold text-gray-700">Username</label>
+                <div class="mt-2">
+                    <input type="text" name="username" id="username" required class="block w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-sky-500 focus:border-sky-500 transition duration-150">
+                </div>
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-semibold text-gray-700">Password</label>
+                <div class="mt-2">
+                    <input type="password" name="password" id="password" required class="block w-full px-4 py-2 border-2 border-gray-200 rounded-xl focus:ring-sky-500 focus:border-sky-500 transition duration-150">
+                </div>
+            </div>
+            
+            <div>
+                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition duration-150 transform hover:translate-y-px">
+                    Login
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-8 text-center">
+            <a href="{{ url_for('register') }}" class="text-sm text-sky-600 hover:text-sky-800 font-semibold transition duration-150">Don't have an account? Register now!</a>
+        </div>
+    </div>
+</body>
+</html>

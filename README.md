@@ -5,6 +5,12 @@ It integrates **AI-powered fitness and medication plans** with a secure **patien
 
 
 ## ✨ Wireframes
+![Login Page](Screenshot 2025-09-07 221608.png)
+![Register](Screenshot 2025-09-07 221559.png)
+![Dashboard](Screenshot 2025-09-07 221637.png)
+![Doctor communication](Screenshot 2025-09-07 221649.png)
+
+
 
 
 

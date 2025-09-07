@@ -5,7 +5,7 @@ It integrates **AI-powered fitness and medication plans** with a secure **patien
 
 
 ## ✨ Wireframes
-![Register Page](https://github.com/suregowtham123/FITNESS-AND-MEDICATION/blob/main/Screenshot%2025-09-07%221608.png)
+![Register Page](https://github.com/suregowtham123/FITNESS-AND-MEDICATION/blob/main/Screenshot%202025-09-07%20221559.png)
 ![Login Page](https://github.com/suregowtham123/FITNESS-AND-MEDICATION/blob/main/Screenshot%202025-09-07%20221608.png)
 
 ![Dashboard](https://github.com/suregowtham123/FITNESS-AND-MEDICATION/blob/main/Screenshot%2025-09-07%221637.png)
